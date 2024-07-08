@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="homeContainer">
+      <div class="loginContainer" id="loginContainer">
+        <div id="banner">
+          <p id="message"></p>
+        </div>
+        <form id="loginForm">
+          <h2>Log In</h2>
+          <div class="input">
+            <input
+              type="text"
+              name="user"
+              id="user"
+              placeholder="Enter Username"
+            />
+          </div>
+          <div class="input">
+            <input
+              type="password"
+              name="userPassword"
+              id="userPassword"
+              placeholder="password"
+            />
+          </div>
+          <p class="account">
+            Don't have an account? <span id="showRegister">Register</span>
+          </p>
+          <button type="submit" id="login" class="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
+      <div class="registerContainer" id="registerContainer">
+        <form id="registerForm" method="post">
+          <h2>Register</h2>
+          <div class="input">
+            <label for="username">Username:</label>
+            <input type="text" name="name" id="username" />
+            <span id="errorName" class="errorField">field is required</span>
+          </div>
+          <div class="input">
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" />
+            <span id="errorEmail" class="errorField">Enter a valid email</span>
+          </div>
+          <!-- <div class="input">
+            <label for="phone">Phone number:</label>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              pattern="[0-9]{3}-[0-9]{10}"
+              requied
+            />
+            <span id="errorPhone" class="errorField">field is required</span>
+          </div> -->
+          <div class="input">
+            <label for="password">password:</label>
+            <input type="password" name="password" id="password" />
+            <span id="errorPassword" class="errorField">field is required</span>
+          </div>
+          <div class="input">
+            <label for="confirm">Confirm password:</label>
+            <input type="password" name="confirm" id="confirm" />
+            <span id="errorConfirm" class="errorField">Passwords must match</span>
+          </div>
+          <p class="account">
+            Already have an account? <span id="showLogin">Login</span>
+          </p>
+          <button type="submit" id="submitBtn" class="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

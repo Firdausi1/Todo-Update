@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: var(--bg-yellow);
+}
+form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+.loginContainer, .registerContainer {
+  width: 30%;
+}
+.registerContainer {
+  display: none;
+}
+.account {
+  font-size: 12px;
+  margin-top: 10px;
+}
+.account span {
+  cursor: pointer;
+  color: #2d46c8;
+}

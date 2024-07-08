@@ -1,0 +1,32 @@
+header {
+  background-color: #fbf3d5;
+  height: 100vh;
+}
+.getStarted {
+  align-items: center;
+  height: 100vh;
+  background-color: #F9F9F9;
+}
+.todoTitle span  {
+  font-size: 60px;
+}
+.todoTitle span:nth-child(1) {
+  color: #ABC2E8;
+}
+.todoTitle span:nth-child(2) {
+  color: #FF9F9F;
+}
+.todoTitle span:nth-child(3) {
+  color: #B6E2A1;
+}
+.todoTitle span:nth-child(4) {
+  color: #B1AFFF;
+}
+.todoText {
+  font-size: 14px;
+  max-width: 30%;
+  line-height: 20px;
+}
+.getStarted button {
+  width: 10%;
+}

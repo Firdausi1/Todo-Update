@@ -1,0 +1,81 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Ubuntu", sans-serif;
+  --bg-yellow: #fbf3d5;
+}
+
+input[type="text"],
+input[type="password"], input[type="tel"], textarea {
+  outline: none;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid gray;
+  width: 100%;
+}
+label {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+label,
+input {
+  display: block;
+}
+
+/* reusable code */
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.btn-primary {
+  background-color: #000;
+  color: #fff;
+  margin-top: 30px;
+  width: 100%;
+}
+.input {
+  margin-bottom: 20px;
+}
+.errorField {
+  color: red;
+  margin-top: 5px;
+  display: none;
+  font-size: 12px;
+}
+#banner {
+  display: none;
+  right: 20px;
+  top: 20px;
+  padding: 20px;
+  font-size: 14px;
+}
+/* #message {
+  color: #fff;
+} */
+.errorMessage {
+  border-left: 5px solid red;
+  background-color: rgba(255, 0, 0, 0.307);
+  color: red;
+  margin-bottom: 10px;
+}
+.successMessage {
+  border-left: 5px solid green;
+  background-color: rgba(0, 128, 0, 0.307);
+  color: green;
+}
+.flex {
+  display: flex;
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
