@@ -11,7 +11,7 @@ $(document).ready(function () {
   let selectedTag = [];
   let activeCategory =
     JSON.parse(localStorage.getItem("activeCategory"))?.value || "";
-  let hideDone = JSON.parse(localStorage.getItem("hideDone")).value || false;
+  let hideDone = JSON.parse(localStorage.getItem("hideDone"))?.value || false;
 
   $("#hideDone").attr("checked", hideDone);
 
