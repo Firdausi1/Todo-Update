@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  const baseUrl = "http://todo.reworkstaging.name.ng/v1";
+  const baseUrl = "https://todo-api-node-6pbz.onrender.com/api";
   const emailRegex = /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
   let submit = false;
 
@@ -41,6 +41,7 @@ $(document).ready(function () {
           password: userDetails.password,
         },
         success: function (response) {
+          console.log(response)
           if (response.code === 404) {
             banner.slideDown();
             banner.addClass("errorMessage");

@@ -1,7 +1,7 @@
 import { pastelColors } from "./tagColors.js";
 
 $(document).ready(function () {
-  const baseUrl = "http://todo.reworkstaging.name.ng/v1";
+  const baseUrl = "https://todo-api-node-6pbz.onrender.com/api";
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   $("#username").html(currentUser.name.split(" ")[0]);
 
@@ -9,7 +9,8 @@ $(document).ready(function () {
   let categories = [];
   let tasks = [];
   let selectedTag = [];
-  let activeCategory = "";
+  let activeCategory =
+    JSON.parse(localStorage.getItem("activeCategory"))?.value || "";
   let hideDone = JSON.parse(localStorage.getItem("hideDone")).value || false;
 
   $("#hideDone").attr("checked", hideDone);
@@ -69,7 +70,7 @@ $(document).ready(function () {
       $("#errorCategory").show();
       validate = false;
     } else if (checkCatName) {
-      if (checkCatName.id === currentTagId) {
+      if (checkCatName._id === currentTagId) {
         validate = true;
         $("#errorCategory").hide();
       } else {
@@ -87,7 +88,7 @@ $(document).ready(function () {
           url: `${baseUrl}/tags`,
           method: "POST",
           data: {
-            user_id: currentUser.id,
+            user_id: currentUser._id,
             title: catName,
             color: pastelColors[categories.length],
           },
@@ -123,9 +124,9 @@ $(document).ready(function () {
   });
   function getAllTags() {
     $.ajax({
-      url: `${baseUrl}/tags?user_id=${currentUser.id}`,
+      url: `${baseUrl}/tags?user_id=${currentUser._id}`,
       method: "GET",
-      contentType: "application/json",
+      // contentType: "application/json",
       success: function (response) {
         categories = response;
         displayCategories(response);
@@ -147,7 +148,7 @@ $(document).ready(function () {
     categories.forEach((cat) => {
       display.append(`<li class="flex justify-between tag cat ${
         activeCategory === cat.title && "activeTag"
-      }" data-id=${cat.id}>
+      }" data-id=${cat._id}>
       <div class="flex">
         <span class="catIcon" style="background: ${cat.color}"></span>
         <p class="filterCat catName">${cat.title}</p>
@@ -176,7 +177,7 @@ $(document).ready(function () {
       $("#errorTitle").show();
       validate = false;
     } else if (checkTitle) {
-      if (checkTitle.id === currentTaskId) {
+      if (checkTitle._id === currentTaskId) {
         validate = true;
         $("#errorTitle").hide();
         $("#errorText").hide();
@@ -204,7 +205,7 @@ $(document).ready(function () {
           url: `${baseUrl}/tasks`,
           method: "POST",
           data: {
-            tag_id: selectedTag[0].id,
+            tag_id: selectedTag[0]._id,
             title: taskTitle,
             content: taskText,
           },
@@ -301,7 +302,7 @@ $(document).ready(function () {
     //   .join("")}
     newTasks.forEach((task) => {
       const tag = categories?.find((item) => item.title === task.tag);
-      display.append(`<div class="card" data-id="${task.id}">
+      display.append(`<div class="card" data-id="${task._id}">
       <div class="cardTop flex justify-between">
         <h3 class="title ${task.completed && "checked"}">${task.title}</h3>
         <div class="dropIcon">
@@ -332,16 +333,16 @@ $(document).ready(function () {
   // displayTasks(activeCategory, hideDone);
   function getAllTasks() {
     $.ajax({
-      url: `${baseUrl}/tasks?user_id=${currentUser.id}`,
+      url: `${baseUrl}/tasks?user_id=${currentUser._id}`,
       method: "GET",
-      contentType: "application/json",
+      // contentType: "application/json",
       success: function (response) {
         // console.log(response);
         tasks = response;
         displayTasks(activeCategory, hideDone);
       },
       error: function (err) {
-        console.log("addTag", err);
+        console.log("getTag", err);
       },
     });
   }
@@ -353,7 +354,7 @@ $(document).ready(function () {
     display.empty();
 
     categories.forEach((cat) => {
-      const tag = selectedTag.find((item) => item.title === cat.title);
+      const tag = selectedTag.find((item) => item?.title === cat.title);
       display.append(`<li class="flex tag ${tag && "activeTag"}">
       <span class="catIcon" style="background: ${cat.color}"></span>
       <p class="tagName catName">${cat.title}</p>
@@ -384,7 +385,7 @@ $(document).ready(function () {
     const closestId = $(this).closest(".card");
     const id = closestId.data("id");
 
-    let task = tasks.find((item) => item.id === id);
+    let task = tasks.find((item) => item._id === id);
     if (task) {
       $.ajax({
         url: `${baseUrl}/tasks/${id}/set-completed`,
@@ -411,11 +412,19 @@ $(document).ready(function () {
     const catName = this.textContent;
     if (activeCategory === catName) {
       activeCategory = "";
+      localStorage.setItem(
+        "activeCategory",
+        JSON.stringify({ value: activeCategory })
+      );
       cat.removeClass("activeTag");
       displayTasks(activeCategory, hideDone);
       displayCategories(categories);
     } else {
       activeCategory = catName;
+      localStorage.setItem(
+        "activeCategory",
+        JSON.stringify({ value: activeCategory })
+      );
       displayCategories(categories);
       displayTasks(activeCategory, hideDone);
     }
@@ -427,7 +436,7 @@ $(document).ready(function () {
     localStorage.setItem("hideDone", JSON.stringify({ value: hideDone }));
     tasks.forEach((item) => {
       $.ajax({
-        url: `${baseUrl}/tasks/${item.id}/set-hidden`,
+        url: `${baseUrl}/tasks/${item._id}/set-hidden`,
         method: "PUT",
         data: {
           hidden: item.completed && hideDone ? true : false,
@@ -463,7 +472,7 @@ $(document).ready(function () {
     const closestId = $(this).closest(".card");
     const id = closestId.data("id");
 
-    let task = tasks.find((item) => item.id === id);
+    let task = tasks.find((item) => item._id === id);
 
     if (task) {
       const tag = categories?.find((cat) => cat.title === task.tag);
@@ -485,6 +494,7 @@ $(document).ready(function () {
         $("#modal").hide();
         $("#deleteModal").hide();
         getAllTasks();
+        currentTaskId = undefined;
       },
       error: function (err) {
         console.log("delete tasks", err);
@@ -497,7 +507,7 @@ $(document).ready(function () {
     const closestId = $(this).closest(".cat");
     const id = closestId.data("id");
 
-    let tag = categories.find((item) => item.id === id);
+    let tag = categories.find((item) => item._id === id);
 
     if (tag) {
       $("#modal").show();
@@ -507,11 +517,13 @@ $(document).ready(function () {
     }
   });
   $(document).on("click", ".deleteTag", function () {
+    console.log(currentTagId);
     $.ajax({
       url: `${baseUrl}/tags/${currentTagId}`,
       method: "DELETE",
       success: function () {
         close();
+        activeCategory = "";
         getAllTags();
         getAllTasks();
       },
@@ -522,6 +534,8 @@ $(document).ready(function () {
   });
   $("#logout").click(function () {
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("hideDone");
+    localStorage.removeItem("activeCategory");
     $(location).prop("href", "index.html");
   });
 });
