@@ -270,11 +270,7 @@ $(document).ready(function () {
       }
     }
 
-    if (isDone && filter === "") {
-      tasks.forEach((item) => {
-        filterDone(item);
-      });
-    } else if (filter !== "") {
+    if (filter !== "") {
       tasks.forEach((item) => {
         const categoryExists = categories?.find((cat) => cat.title === filter);
         if (categoryExists) {
@@ -290,6 +286,10 @@ $(document).ready(function () {
         } else {
           return;
         }
+      });
+    } else if (isDone && filter === "") {
+      tasks.forEach((item) => {
+        filterDone(item);
       });
     } else {
       newTasks = tasks;
@@ -318,7 +318,7 @@ $(document).ready(function () {
       </p>
       <div class="cardBottom flex justify-between">
       <div class="flex" style="gap: 10px">
-        <span class="catIcon" style="background: ${tag?.color}"></span>
+        <span class="catIcon" style="background: ${tag.color}"></span>
       </div>
         <div class="flex">
           <input type="checkbox" name="done" ${
@@ -332,6 +332,7 @@ $(document).ready(function () {
   }
   // displayTasks(activeCategory, hideDone);
   function getAllTasks() {
+
     $.ajax({
       url: `${baseUrl}/tasks?user_id=${currentUser._id}`,
       method: "GET",
